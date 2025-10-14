@@ -1,0 +1,38 @@
+# AutoRad Clinical Configuration
+data:
+  data_dir: "/content/mimic-cxr-kaggle"
+  image_size: [224, 224]
+  hu_normalization: true
+  hu_min: -1000
+  hu_max: 2000
+  augment_3d: false
+  text_max_length: 512
+  batch_size: 8
+  num_workers: 4
+
+model:
+  image_backbone: "densenet121"
+  text_backbone: "emilyalsentzer/Bio_ClinicalBERT"
+  fusion_dim: 512
+  num_heads: 8
+  dropout: 0.1
+  num_classes: 15
+  use_3d: false
+  llm_model: "microsoft/BioGPT-Large"
+
+training:
+  learning_rate: 1e-4
+  num_epochs: 50
+  warmup_epochs: 5
+  weight_decay: 1e-4
+  gradient_clip: 1.0
+  cls_weight: 1.0
+  reg_weight: 0.5
+  clinical_weight: 0.1
+
+deployment:
+  api_host: "0.0.0.0"
+  api_port: 8000
+  gradio_port: 7860
+  streamlit_port: 8501
+  enable_ssl: false
